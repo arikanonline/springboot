@@ -1,17 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
   name: hello-world
 spec:
   replicas: 2
+  revisionHistoryLimit: 4
+  selector:
+    matchLabels:
+      app: hello-world
   template:
     metadata:
       labels:
         app: hello-world
-        visualize: "true"
     spec:
       containers:
       - name: hello-world-pod
         image: arikanonline/springboot
+        imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 8081
+        - containerPort: 8080
+          protocol: TCP
+
